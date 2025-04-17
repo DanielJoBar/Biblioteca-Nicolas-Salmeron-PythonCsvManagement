@@ -1,5 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from io import StringIO
+import os 
 import pandas as pd
 import json
 
@@ -86,6 +87,7 @@ def guardar_csv(df: pd.DataFrame, salida: str):
 #   Inicia el servidor en el puerto 5000
 #   Donde escucha las peticiones POST y OPTIONS 
 if __name__ == "__main__":
-    server = HTTPServer(('PORT', 5000), JSONRequestHandler)
+    port = int(os.environ.get("PORT", 5000))  # Render define automáticamente esta variable
+    server = HTTPServer(('0.0.0.0', port), JSONRequestHandler)
     print("Servidor HTTP iniciado en http://localhost:5000")
     server.serve_forever()
